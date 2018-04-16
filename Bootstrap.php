@@ -16,9 +16,18 @@ class Bootstrap implements BootstrapInterface
 {
     public function bootstrap($app)
     {
-        if ($app->id === 'app-backend') {
-            Yii::setAlias('@wavecms_page', '@vendor/mrstroz/yii2-wavecms-metatags');
 
+        /** Set backend language based on user lang (Must be done before define translations */
+        if ($app->id === 'app-backend') {
+            if (!Yii::$app->user->isGuest) {
+                Yii::$app->language = Yii::$app->user->identity->lang;
+            }
+        }
+
+        $this->initTranslations();
+
+        if ($app->id === 'app-backend') {
+            Yii::setAlias('@wavecms_metatags', '@vendor/mrstroz/yii2-wavecms-metatags');
         }
     }
 
@@ -29,7 +38,7 @@ class Bootstrap implements BootstrapInterface
     {
         Yii::$app->i18n->translations['wavecms_metatags/*'] = [
             'class' => PhpMessageSource::class,
-            'basePath' => '@wavecms_page/messages',
+            'basePath' => '@wavecms_metatags/messages',
             'fileMap' => [
                 'main' => 'main.php',
             ],
