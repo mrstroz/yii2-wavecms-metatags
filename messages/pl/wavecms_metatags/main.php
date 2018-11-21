@@ -17,9 +17,14 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'ID' => '',
+    'Open Graph - description' => 'Open Graph - opis',
+    'Open Graph - image' => 'Open Graph - obraz',
+    'Open Graph - title' => 'Open Graph - tytuł',
+    'Open Graph - type' => 'Open Graph - typ',
+    'Preferred size for Facebook: {size}' => 'Preferowany rozmiar dla Facebook\'a: {size}',
     'Attribute {attribute} is not defined' => 'Atrybut {attribute} nie jest zdefiniowany',
     'Description' => 'Opis',
-    'ID' => '',
     'Keywords' => 'Słowa kluczowe',
     'Language' => 'Język',
     'Model' => 'Model',

@@ -11,13 +11,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Run
 
 ```
-composer require --prefer-source "mrstroz/yii2-wavecms-metatags" "~0.1.0"
+composer require --prefer-source "mrstroz/yii2-wavecms-metatags" "~0.2.0"
 ```
 
 or add
 
 ```
-"mrstroz/yii2-wavecms-metatags": "~0.1.0"
+"mrstroz/yii2-wavecms-metatags": "~0.2.0"
 ```
 
 to the require section of your `composer.json` file.
@@ -54,10 +54,6 @@ yii migrate/up --migrationPath=@vendor/mrstroz/yii2-wavecms-metatags/migrations
 class Page extends ActiveRecord
 {
 
-    public $meta_title;
-    public $meta_description;
-    public $meta_keywords;
-    
     public function behaviors()
     {
         return [
@@ -72,5 +68,11 @@ class Page extends ActiveRecord
 3. Use `MetaTags` helper to register meta tags
 ```php
 $page = Page::find()->one();
-MetaTags::register($page);
+\mrstroz\wavecms\metatags\components\helpers\MetaTags::register($page->metaTags);
+
+//or
+
+$metaTags = \mrstroz\wavecms\metatags\models\MetaTags::find()->one();
+\mrstroz\wavecms\metatags\components\helpers\MetaTags::register($metaTags);
+
 ```

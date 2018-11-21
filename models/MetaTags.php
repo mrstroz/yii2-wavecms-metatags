@@ -2,6 +2,8 @@
 
 namespace mrstroz\wavecms\metatags\models;
 
+use mrstroz\wavecms\components\behaviors\ImageBehavior;
+use mrstroz\wavecms\metatags\models\query\MetaTagsQuery;
 use Yii;
 
 /**
@@ -11,9 +13,13 @@ use Yii;
  * @property string $language
  * @property string $model
  * @property integer $model_id
- * @property string $title
- * @property string $description
- * @property string $keywords
+ * @property string $meta_title
+ * @property string $meta_description
+ * @property string $meta_keywords
+ * @property string $og_type
+ * @property string $og_title
+ * @property string $og_description
+ * @property string $og_image
  */
 class MetaTags extends \yii\db\ActiveRecord
 {
@@ -25,6 +31,16 @@ class MetaTags extends \yii\db\ActiveRecord
         return 'meta_tags';
     }
 
+    public function behaviors()
+    {
+        return [
+            'og_image' => [
+                'class' => ImageBehavior::class,
+                'attribute' => 'og_image',
+            ]
+        ];
+    }
+
     /**
      * @inheritdoc
      */
@@ -33,7 +49,9 @@ class MetaTags extends \yii\db\ActiveRecord
         return [
             [['model_id'], 'integer'],
             [['language'], 'string', 'max' => 10],
-            [['model', 'title', 'description', 'keywords'], 'string', 'max' => 255],
+            [['model', 'meta_title', 'meta_description', 'meta_keywords', 'og_type', 'og_title'], 'string', 'max' => 255],
+            [['og_description'], 'string'],
+            [['og_image'], 'image'],
         ];
     }
 
@@ -47,89 +65,23 @@ class MetaTags extends \yii\db\ActiveRecord
             'language' => Yii::t('wavecms_metatags/main', 'Language'),
             'model' => Yii::t('wavecms_metatags/main', 'Model'),
             'model_id' => Yii::t('wavecms_metatags/main', 'Model ID'),
-            'title' => Yii::t('wavecms_metatags/main', 'Title'),
-            'description' => Yii::t('wavecms_metatags/main', 'Description'),
-            'keywords' => Yii::t('wavecms_metatags/main', 'Keywords'),
+            'meta_title' => Yii::t('wavecms_metatags/main', 'Title'),
+            'meta_description' => Yii::t('wavecms_metatags/main', 'Description'),
+            'meta_keywords' => Yii::t('wavecms_metatags/main', 'Keywords'),
+            'og_type' => Yii::t('wavecms_metatags/main', 'Open Graph - type'),
+            'og_title' => Yii::t('wavecms_metatags/main', 'Open Graph - title'),
+            'og_description' => Yii::t('wavecms_metatags/main', 'Open Graph - description'),
+            'og_image' => Yii::t('wavecms_metatags/main', 'Open Graph - image'),
         ];
     }
 
     /**
      * @inheritdoc
-     * @return \mrstroz\wavecms\metatags\models\query\MetaTagsQuery the active query used by this AR class.
+     * @return MetaTagsQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new \mrstroz\wavecms\metatags\models\query\MetaTagsQuery(get_called_class());
+        return new MetaTagsQuery(get_called_class());
     }
 
-    /**
-     * Return array of meta tags
-     *
-     * @param string $model Model name
-     * @param integer $modelId Model id
-     * @param string $lang Language
-     * @return array
-     */
-    public function getMetaTags($model, $modelId, $lang)
-    {
-        $metaTags = self::find()->andWhere([
-            'model' => $model,
-            'model_id' => $modelId,
-            'language' => $lang
-        ])->asArray()->one();
-
-        return $metaTags;
-    }
-
-    /**
-     * Set meta tags
-     *
-     * @param array $values
-     * @param string $model Model name
-     * @param integer $modelId Model id
-     * @param string $lang Language
-     * @return array
-     * @throws \yii\base\InvalidConfigException
-     */
-    public function setMetaTags($values, $model, $modelId, $lang)
-    {
-        /** @var MetaTags $metaTags */
-        $metaTags = self::find()->andWhere([
-            'model' => $model,
-            'model_id' => $modelId,
-            'language' => $lang
-        ])->one();
-
-        if (!$metaTags) {
-            /** @var MetaTags $metaTags */
-            $metaTags = Yii::createObject(MetaTags::class);
-            $metaTags->model = $model;
-            $metaTags->model_id = $modelId;
-            $metaTags->language = $lang;
-        }
-
-        if ($values) {
-            foreach ($values as $key => $val) {
-                $metaTags->{$key} = $val;
-            }
-            $metaTags->save();
-        }
-
-        return $metaTags->toArray();
-    }
-
-    /**
-     * Delete meta tags
-     * @param string $model Model name
-     * @param integer $modelId Model id
-     * @return int
-     */
-    public function deleteMetaTags($model, $modelId)
-    {
-        return self::deleteAll([
-            'model' => $model,
-            'model_id' => $modelId,
-        ]);
-
-    }
 }
