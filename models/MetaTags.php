@@ -20,6 +20,7 @@ use Yii;
  * @property string $og_title
  * @property string $og_description
  * @property string $og_image
+ * @property int $noindex
  */
 class MetaTags extends \yii\db\ActiveRecord
 {
@@ -47,7 +48,7 @@ class MetaTags extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['model_id'], 'integer'],
+            [['model_id', 'noindex'], 'integer'],
             [['language'], 'string', 'max' => 10],
             [['model', 'meta_title', 'meta_description', 'meta_keywords', 'og_type', 'og_title'], 'string', 'max' => 255],
             [['og_description'], 'string'],
@@ -72,6 +73,7 @@ class MetaTags extends \yii\db\ActiveRecord
             'og_title' => Yii::t('wavecms_metatags/main', 'Open Graph - title'),
             'og_description' => Yii::t('wavecms_metatags/main', 'Open Graph - description'),
             'og_image' => Yii::t('wavecms_metatags/main', 'Open Graph - image'),
+            'noindex' => Yii::t('wavecms_metatags/main', 'Noindex'),
         ];
     }
 

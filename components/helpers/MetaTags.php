@@ -37,6 +37,13 @@ class MetaTags extends Component
                 ]);
             }
 
+            if ($metaTags->noindex) {
+                Yii::$app->view->registerMetaTag([
+                    'name' => 'robots',
+                    'content' => 'noindex',
+                ]);
+            }
+
             Yii::$app->view->registerMetaTag([
                 'name' => 'og:url',
                 'content' => Yii::$app->request->absoluteUrl,

@@ -17,17 +17,20 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Don\'t index this page by robots:' => 'Nie indeksuj tej strony przez roboty',
+    'Following tag will be added to &lt;head&gt;:<br />&lt;meta name="robots" content="noindex"&gt;' => 'Poniższy tag zostanie dodany do sekcji &lt;head&gt;:<br />&lt;meta name="robots" content="noindex"&gt;',
     'ID' => '',
-    'Open Graph - description' => 'Open Graph - opis',
-    'Open Graph - image' => 'Open Graph - obraz',
-    'Open Graph - title' => 'Open Graph - tytuł',
-    'Open Graph - type' => 'Open Graph - typ',
-    'Preferred size for Facebook: {size}' => 'Preferowany rozmiar dla Facebook\'a: {size}',
+    'Noindex' => '',
     'Attribute {attribute} is not defined' => 'Atrybut {attribute} nie jest zdefiniowany',
     'Description' => 'Opis',
     'Keywords' => 'Słowa kluczowe',
     'Language' => 'Język',
     'Model' => 'Model',
     'Model ID' => 'Model ID',
+    'Open Graph - description' => 'Open Graph - opis',
+    'Open Graph - image' => 'Open Graph - obraz',
+    'Open Graph - title' => 'Open Graph - tytuł',
+    'Open Graph - type' => 'Open Graph - typ',
+    'Preferred size for Facebook: {size}' => 'Preferowany rozmiar dla Facebook\'a: {size}',
     'Title' => 'Tytuł',
 ];
