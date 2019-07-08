@@ -2,6 +2,7 @@
 
 namespace mrstroz\wavecms\metatags\models\query;
 
+use mrstroz\wavecms\metatags\models\MetaTags;
 use Yii;
 
 /**
@@ -49,8 +50,8 @@ class MetaTagsQuery extends \yii\db\ActiveQuery
         }
 
         return $this->andWhere([
-            'model' => $model,
-            'language' => $lang
+            MetaTags::tableName() . '.model' => $model,
+            MetaTags::tableName() . '.language' => $lang
         ]);
 
     }
